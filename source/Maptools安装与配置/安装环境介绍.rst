@@ -1,0 +1,21 @@
+安装环境介绍
+==============
+
+系统环境
+-----------
+
+Maptools理论上可以运行在任意系统环境下, 已通过验证的环境有:
+
++ Windows (cmd)
++ Windows (Powershell)
++ Linux (Ubuntu)
++ WSL
+
+.. important::
+
+    如果有条件的话, 我们强烈建议使用 Linux/WSL 环境.
+
+Python
+----------
+Python 3.8 及以上版本
+

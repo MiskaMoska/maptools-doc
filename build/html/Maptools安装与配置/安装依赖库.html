@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>安装依赖库 &mdash; Maptools 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="安装Maptools" href="%E5%AE%89%E8%A3%85Maptools.html" />
+    <link rel="prev" title="安装环境介绍" href="%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Maptools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Maptools安装与配置</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D.html">安装环境介绍</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">安装依赖库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">安装python依赖库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytorch">安装pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graphviz">安装Graphviz</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windowsgraphviz">在Windows中安装Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-wslgraphviz">在Linux/WSL中安装Graphviz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%AE%89%E8%A3%85Maptools.html">安装Maptools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html">配置环境变量</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Maptools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">安装依赖库</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Maptools安装与配置/安装依赖库.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>安装依赖库<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<p>Maptool的依赖库包括:</p>
+<ul class="simple">
+<li><p>graphviz</p></li>
+<li><p>numpy</p></li>
+<li><p>pytorch</p></li>
+<li><p>Pillow</p></li>
+<li><p>onnx</p></li>
+<li><p>onnxruntime</p></li>
+<li><p>networkx</p></li>
+<li><p>matplotlib</p></li>
+<li><p>ppq</p></li>
+</ul>
+<section id="python">
+<span id="install-python-package"></span><h2>安装python依赖库<a class="headerlink" href="#python" title="此标题的永久链接"></a></h2>
+<p>首先使用python的包管理工具pip (conda也可以) 安装python依赖库, 依次运行以下命令：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>graphviz
+pip<span class="w"> </span>install<span class="w"> </span>numpy
+pip<span class="w"> </span>install<span class="w"> </span>Pillow
+pip<span class="w"> </span>install<span class="w"> </span>onnx
+pip<span class="w"> </span>install<span class="w"> </span>onnxruntime
+pip<span class="w"> </span>install<span class="w"> </span>networkx
+pip<span class="w"> </span>install<span class="w"> </span>ppq
+pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>如果中途遇到报错, 可以尝试pip或conda换源后重新安装.</p>
+<p>如果换源也解决不了问题， 由于以上库均为开源包, 所以可以去 <a class="reference external" href="https://github.com">github</a> 下载源代码工程, 然后从源代码安装.
+一般最高赞的就是我们要找的开源包. 将其下载至本地, 然后进入工程根目录运行：</p>
+<div class="highlight-Powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>即可完成python包的安装.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>以上展示的pip命令和python命令均假设在Windows平台下运行，如果你使用的是Linux/WSL，则要根据自己的版本以及链接配置决定使用什么样的命令，比如我的WSL中的命令是pip3和python3，下同</p>
+</div>
+</section>
+<section id="pytorch">
+<h2>安装pytorch<a class="headerlink" href="#pytorch" title="此标题的永久链接"></a></h2>
+<p>虽然pytorch也是python的包，但是建议使用官方的安装命令，点击 <a class="reference external" href="https://pytorch.org/">这里</a> 进入pytorch官网，进入pytorch安装指引界面.</p>
+<p>根据自己的的平台类型以及软硬件配置进行选择，如果没有NVIDIA的显卡，则选择Compute Platform为CPU，如果有NVIDIA的显卡，则根据显卡驱动版本选择Compute Platform为满足要求的CUDA版本。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>一定要有NVIDIA的显卡吗?</p>
+<p>不一定。如果你没有NVIDIA的显卡，可以选择安装cpu版本的pytorch，这不会影响Maptools的正常功能，只是不能使用cuda加速Maptools的CalcuSim了。
+如果你的显卡（非集显）是AMD或Intel的，虽然pytorch也能提供一些支持，但是Maptools目前没有对这种情况做适配，所以有也没用。</p>
+</div>
+<p>如果你有NVDIA的显卡，查看自己显卡驱动版本的方法（所有平台通用）：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nvidia-smi
+</pre></div>
+</div>
+<p>点击 <a class="reference external" href="https://blog.csdn.net/liferecords/article/details/127528193">这里</a> 查看显卡驱动版本与CUDA版本的对应关系。</p>
+<p>选择完成后，将Pytorch官方给出的命令拷贝到命令行运行，实现Pytorch的安装。</p>
+</section>
+<section id="graphviz">
+<h2>安装Graphviz<a class="headerlink" href="#graphviz" title="此标题的永久链接"></a></h2>
+<p>Graphviz是一个图可视化工具，在 <a class="reference internal" href="#install-python-package"><span class="std std-ref">安装python依赖库</span></a> 中我们安装的是graphviz的python API包，现在我们还需要安装graphviz的客户端程序。</p>
+<section id="windowsgraphviz">
+<h3>在Windows中安装Graphviz<a class="headerlink" href="#windowsgraphviz" title="此标题的永久链接"></a></h3>
+<ol class="arabic simple">
+<li><p>点击 <a class="reference external" href="https://www.graphviz.org/download/">这里</a> 进入graphviz的官网，选择win64的安装程序（任意版本即可）并点击下载.</p></li>
+<li><p>运行下载得到的exe安装程序，在安装时注意勾选添加路径到环境变量.</p></li>
+<li><p>安装完成后，重新打开一个命令行（cmd或Powershell），运行：</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dot<span class="w"> </span>-version
+</pre></div>
+</div>
+<p>如果显示版本信息，则表示graphviz本地端已经安装成功。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>在Windows中安装的Graphviz对Powershell和cmd均有效</p>
+</div>
+</section>
+<section id="linux-wslgraphviz">
+<h3>在Linux/WSL中安装Graphviz<a class="headerlink" href="#linux-wslgraphviz" title="此标题的永久链接"></a></h3>
+<ol class="arabic simple">
+<li><p>运行以下命令进行安装：</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>graphviz
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>安装完成后，运行：</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dot<span class="w"> </span>-version
+</pre></div>
+</div>
+<p>如果显示版本信息，则表示graphviz本地端已经安装成功。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>本文展示的所有Linux/WSL命令均未考虑访问权限，如遇到访问权限限制，请结合自己的情况选择使用sudo或chown+chmod来解决</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D.html" class="btn btn-neutral float-left" title="安装环境介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="%E5%AE%89%E8%A3%85Maptools.html" class="btn btn-neutral float-right" title="安装Maptools" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2023, Wenxu Cao.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
