@@ -1,0 +1,76 @@
+配置环境变量
+=============
+.. important:: 
+
+    为了保证Maptools的正常运行，需要将Maptools的根目录（包含有`setup.py`文件的那个目录）添加到环境变量中，在Windows中，cmd和Powershell的环境变量是相互独立的，根据你是用的是cmd、Powershell还是Linux/WSL，使用不同的环境变量配置方式。
+
+配置cmd环境变量
+---------------
+
+在Windows桌面右键 `此电脑`, 选择 `属性`, 打开 `高级选项` -> `环境变量`, 新建一个用户或系统变量, 变量名为: `NVCIM_HOME`, 值为Maptools的根目录.
+
+重新打开一个cmd窗口，运行:
+
+.. code-block:: shell
+
+    set NVCIM_HOME
+
+如果显示了刚配置的路径，则表明环境变量配置成功。
+
+配置Powershell环境变量
+----------------------
+
+如果你使用的是Powershell，则需要在PROFILE文件中添加环境变量。
+
+默认你已安装了VSCode，则运行:
+
+.. code-block:: shell
+
+    code $PROFILE
+
+在打开的文件中追加一行：
+
+.. code-block:: shell
+
+    $Env:NVCIM_HOME='c:/git/nvcim-comm' #这里的路径换成你自己的
+
+重新打开一个Powershell窗口，运行:
+
+.. code-block:: shell
+    
+    $env:NVCIM_HOME
+
+如果显示了刚配置的路径，则表明环境变量配置成功。
+
+配置Linux/WSL环境变量
+----------------------
+
+.. note::
+
+    如果你使用的是Linux/WSL，则需要在rc文件中配置环境变量。假设你使用的shell是默认的bash，则需要配置~/.bashrc文件，如果你使用的是zsh，则需要配置~/.zshrc文件。
+
+配置的方法是在对应的rc文件中添加一行：
+
+.. code-block:: shell
+
+    export NVCIM_HOME=/mnt/c/git/nvcim-comm #这里的路径换成你自己的
+
+之后不要忘了source:
+
+.. code-block:: shell
+
+    source ~/.bashrc #如果你用的是zsh这里就改成~/.zshrc
+
+重新打开终端，运行：
+
+.. code-block:: shell
+
+    echo $NVCIM_HOME
+
+如果显示了刚配置的路径，则表明环境变量配置成功。
+
+.. warning::
+
+    + 一旦配置了环境变量，则工程目录不能随意修改。
+    + 如果修改了工程目录，需要重新配置环境变量。
+
