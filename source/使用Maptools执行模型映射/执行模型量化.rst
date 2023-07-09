@@ -1,2 +1,85 @@
+.. _perform_quantization:
+
 执行模型量化
 =============
+
+在进行模型映射之前, 可以选择是否对模型进行量化, 若不进行量化, 请忽略本节内容, 直接进入下一节 :ref:`perform_onnx_conversion` .
+
+随机校准量化
+~~~~~~~~~~~~~
+
+|name| 基于ppq (PPL Quantization) 实现模型量化, 并将ppq的量化流程封装至 :py:data:`quantize` 函数中, 用户只需要调用 :py:data:`quantize` 函数便可实现目标模型的全流程量化.
+
+ppq提供量化校准功能, 但是在没有校准集的情况下, 可以使用随机数据进行校准, 一个随机校准量化的脚本如下:
+
+.. code-block:: python
+
+    from maptools.quantization import quantize
+
+    INPUT_SHAPES     = {'input': [1, 3, 224, 224]}
+    CALIB_STEPS      = 128
+    DEVICE           = 'cuda'
+    ONNX_PATH        = 'onnx_models/simp-resnet18.onnx'
+
+    quantize(
+        INPUT_SHAPES,
+        DEVICE,
+        ONNX_PATH,
+        mapname='resnet18',
+        calibset=None,
+        calib_steps=CALIB_STEPS
+    )
+
+专用数据集校准量化
+~~~~~~~~~~~~~~~~~~
+
+为了提升推理准确率, 建议在实际应用中使用专门的数据集进行校准量化, 如下:
+
+.. code-block:: python
+
+    import torch
+    from maptools.quantization import quantize
+    import torchvision.transforms as transforms
+    import torchvision as tv
+
+    trans = transforms.Compose([
+        transforms.Resize([224, 224]),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+    ])
+
+    # 从给定文件目录中加载校准集
+    print("Preparing calibration dataset ...")
+    dataset = tv.datasets.ImageFolder(root='/mnt/c/Users/wx98/Downloads/calib', transform=trans)
+    calibset = [{'input': torch.unsqueeze(sample, dim=0)} for sample, _ in dataset]
+    print(f"Calibration dataset prepared, number of samples: {len(calibset)}")
+
+
+    INPUT_SHAPES     = {'input': [1, 3, 224, 224]}
+    CALIB_STEPS      = 128
+    DEVICE           = 'cuda'
+    ONNX_PATH        = 'onnx_models/simp-resnet18.onnx'
+
+    quantize(
+        INPUT_SHAPES,
+        DEVICE,
+        ONNX_PATH,
+        mapname='resnet18',
+        calibset=calibset,
+        calib_steps=CALIB_STEPS
+    )
+
+
+模型量化结果说明
+~~~~~~~~~~~~
+
+量化结果被保存至 `./mapsave/your-mapname` 目录, 分为三个文件:
+
++ `quantinfo.pkl`
+    保存着模型中所有算子的量化scale信息, 在 :ref:`perform_onnx_conversion` 时被加载至算子图中, 从此便存在于整个映射和仿真流程中.
+
++ `quantparams.pkl`
+    保存着模型中所有卷积层的权重和偏置数据的量化值, 不会被加载至算子图中, 需要使用的时候由用户主动加载.
+
++ `quant_model.onnx`
+    量化后的onnx模型, 不参与后续的映射和仿真, 仅用于用户查看和检验.

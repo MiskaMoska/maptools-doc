@@ -1,0 +1,45 @@
+配置全局参数
+=================
+
+在执行模型映射之前, 有必要在这里介绍一下 |name| 的全局参数, 在使用 |name| 时, 需要确保这些参数被配置到所有映射和仿真器中, 这些映射和仿真器包括:
+
++ :py:class:`OnnxConverter`
++ :py:class:`TileMapper`
++ :py:class:`NocMapper`
++ :py:class:`CalcuSim`
++ :py:class:`TokSim`
+
+全局参数介绍
+-------------
+
+需要配置的全局参数包括:
+
+.. py:data:: mapname
+    :type: str
+    
+    映射名, 用于区分不同的映射, 可以理解为 `project name`, 模型映射和系统仿真过程中生成的所有结果文件都会被写入到名为 `mapname` 的目录 ( `./mapsave/your-mapname` ) 中.
+
+.. py:data:: quantize
+    :type: bool
+
+    用于指示是否量化, `True` 表示进行量化, `False` 表示不进行量化, 如果不进行量化, 可以省略 :ref:`perform_quantization` 步骤.
+
+推荐的参数配置方法
+------------------
+
+由于上述全局参数均作为 `关键字参数` 被传入到对应的映射和仿真器中, 因此推荐使用下面的方法进行全局参数配置:
+
+.. code-block:: python
+
+    # 定义全局参数字典
+    config = {
+        'mapname': 'your-mapname',
+        'quantize': True
+    }
+
+    # 在创建映射和仿真器对象时将全局参数解包传入
+    oc = OnnxConverter(..., **config)
+    tm = TileMapper(..., **config)
+    nm = NocMapper(..., **config)
+    csim = CalcuSim(..., **config)
+    tsim = TokSim(..., **config)

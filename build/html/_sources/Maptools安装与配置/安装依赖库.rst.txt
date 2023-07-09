@@ -59,8 +59,8 @@ Maptool的依赖库包括:
 
     一定要有NVIDIA的显卡吗?
 
-    不一定。如果你没有NVIDIA的显卡，可以选择安装cpu版本的pytorch，这不会影响Maptools的正常功能，只是不能使用cuda加速Maptools的CalcuSim了。
-    如果你的显卡（非集显）是AMD或Intel的，虽然pytorch也能提供一些支持，但是Maptools目前没有对这种情况做适配，所以有也没用。
+    不一定。如果你没有NVIDIA的显卡，可以选择安装cpu版本的pytorch，这不会影响 |name| 的正常功能，只是不能使用cuda加速 |name| 的CalcuSim了。
+    如果你的显卡（非集显）是AMD或Intel的，虽然pytorch也能提供一些支持，但是 |name| 目前没有对这种情况做适配，所以有也没用。
 
 如果你有NVDIA的显卡，查看自己显卡驱动版本的方法（所有平台通用）：
 

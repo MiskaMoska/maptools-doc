@@ -3,16 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Maptools's documentation!
+Welcome to |name|'s documentation!
 ====================================
 
 .. important:: 
 
-   Maptools是一套面向非易失性存算一体的AI算法映射工具, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
+   |name| 是一套面向非易失性存算一体的AI算法映射工具, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
    
 
 .. toctree::
-   :caption: Maptools安装与配置
+   :caption: Maptools 安装与配置
    :maxdepth: 1
 
    Maptools安装与配置/安装环境介绍.rst
@@ -22,18 +22,19 @@ Welcome to Maptools's documentation!
 
 
 .. toctree::
-   :caption: 使用Maptools执行模型映射
+   :caption: 使用 Maptools 执行模型映射
    :maxdepth: 1
 
-   使用Maptools执行模型映射/全局参数配置.rst
+   使用Maptools执行模型映射/准备你的AI模型.rst
+   使用Maptools执行模型映射/配置全局参数.rst
    使用Maptools执行模型映射/执行模型量化.rst
    使用Maptools执行模型映射/执行模型转换.rst
-   使用Maptools执行模型映射/执行Tile映射(逻辑映射).rst
-   使用Maptools执行模型映射/执行NoC映射(物理映射).rst
+   使用Maptools执行模型映射/执行Tile映射 (逻辑映射).rst
+   使用Maptools执行模型映射/执行NoC映射 (物理映射).rst
 
 
 .. toctree::
-   :caption: 使用Maptools执行系统仿真
+   :caption: 使用 Maptools 执行系统仿真
    :maxdepth: 1
 
    使用Maptools执行系统仿真/映射前仿真.rst
@@ -42,7 +43,7 @@ Welcome to Maptools's documentation!
 
 
 .. toctree::
-   :caption: Maptools源代码结构
+   :caption: Maptools 源代码结构
    :maxdepth: 1
 
    Maptools源代码结构/core.rst

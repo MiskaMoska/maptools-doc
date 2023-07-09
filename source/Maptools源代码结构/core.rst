@@ -1,7 +1,7 @@
 core
 ==========
 
-`core` 目录中存放着Maptools的核心数据类型, 数据结构和中间级表示等.
+`core` 目录中存放着 |name| 的核心数据类型, 数据结构和中间级表示等.
 
 数据类型
 ---------
@@ -38,7 +38,7 @@ core
 
 .. py:class:: NNModelArch(enum.Enum)
 
-   神经网络模型架构
+   神经网络模型结构
 
    .. attribute:: VGG 
 
@@ -147,7 +147,7 @@ core
     "xbar_num_ichan",       "`int`",                                    "Tile中的Xbar负责的卷积输入通道的个数"
     "xbar_num_ochan",       "`int`",                                    "Tile中的Xbar负责的卷积输出通道的个数"
     "box_idx",              "`int`",                                    "box索引, 专门用于Concat算子的处理"
-    "'tqc",                 ":py:data:`TileQuantConfig`",               "Tile量化配置信息"
+    "tqc",                  ":py:data:`TileQuantConfig`",               "Tile量化配置信息"
 
 .. attention:: 
 

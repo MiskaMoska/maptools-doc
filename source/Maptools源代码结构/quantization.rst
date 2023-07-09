@@ -1,2 +1,4 @@
 quantization
 =============
+
+.. py:function:: quantize

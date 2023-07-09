@@ -4,7 +4,7 @@
 系统环境
 -----------
 
-Maptools理论上可以运行在任意系统环境下, 已通过验证的环境有:
+|name| 理论上可以运行在任意系统环境下, 已通过验证的环境有:
 
 + Windows (cmd)
 + Windows (Powershell)

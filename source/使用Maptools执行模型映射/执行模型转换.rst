@@ -1,2 +1,79 @@
+.. _perform_onnx_conversion:
+
 执行模型转换
 ===============
+
+模型转换指将onnx格式的AI模型转换、切分为主机算子图和设备算子图，主机算子图是由主机执行，设备算子图由NVCIM芯片执行，一般将AI模型中难以适应NVCIM计算模式的那部分结构（一般为模型的尾部、包含很多 `Reshape` 和 `Sigmoid` 等操作的那部分结构）切分出来作为主机算子图。而将剩余的大部分、能够适应NVCIM计算模式的结构划分到设备算子图。
+
+模型转换流程介绍
+----------------
+
+模型转换包括三个主要步骤:
+
++ onnx解析
+    读取onnx模型并对其每个算子进行解析, 这一步是通过 :py:data:`BaseOperatorParser` 实现的, 在解析的过程中提取有用的信息, 滤除无用的信息, 最终形成原始算子图 :py:data:`OriginGraph`.
+
++ 图分配
+    将 :py:data:`OriginGraph` 分配至主机和设备, 形成主机算子图 :py:data:`HostGrpah` 和设备算子图 :py:data:`DeviceGraph`, 这一步是通过 :py:data:`OriginGraph.dispatch` 方法实现的.
+
++ 设备算子图整型
+    对 :py:data:`DeviceGraph` 进行形态结构处理, 将其整型为能够适应存算一体计算模式的算子图, 这一步是通过 :py:data:`BaseGraphShaper`. 而 :py:data:`HostGrpah` 由于是在主机软件上运行, 所以无需进行整型.
+
+
+通过 :py:data:`OnnxConverter` 实现模型转换
+-------------------------------------------
+
+模型转换的全部流程都被集成到 :py:data:`OnnxConverter` 这个 `class` 中, 用户只需要创建 :py:data:`OnnxConverter` 对象并调用其 :py:data:`OnnxConverter.run_conversion` 方法便可实现整个模型转换流程.
+
+下面是一个例子:
+
+.. code-block:: python
+
+    from maptools import *
+
+    config = {
+        'mapname': 'your-mapname',
+        'quantize': True
+    }
+
+    # 读取onnx模型
+    model = onnx.load("onnx_models/simp-resnet.onnx")
+
+    # 创建onnx转换器, 指定模型结构为 ResNet
+    oc = OnnxConverter(model, arch=NNModelArch.RESNET, **config)
+
+    # 执行模型转换
+    oc.run_conversion()
+
+    # 保存onnx解析得到的原始算子图
+    oc.plot_origin_graph()
+
+    # 保存转换得到的主机算子图
+    oc.plot_host_graph()
+
+    # 保存转换得到的设备算子图
+    oc.plot_device_graph()
+
+.. important::
+
+    + 注意在进行模型转换时需要指定合理的模型结构,  |name| 支持的模型结构都被列举在 :py:data:`NNModelArch` 这个 `枚举型` 变量中.
+    + 在整个映射流程中, 只有 `模型转换` 步骤中需要指定模型结构, `模型转换` 将onnx模型转换成了一种所有模型结构通用的中间级表示, 所以后续所有步骤都是与模型结构无关的, 这也体现出 |name| 低耦合, 高可扩展性的优点.
+
+模型转换结果说明
+----------------
+
+模型转换的主机图和算子图被存放在 :py:data:`OnnxConverter.host_graph` 和 :py:data:`OnnxConverter.device_graph` 两个属性中, 供后续映射和仿真使用.
+
+作出的算子图被保存在以下三个目录中:
+
++ `./mapsave/your-mapname/origin_graph`
++ `./mapsave/your-mapname/host_graph`
++ `./mapsave/your-mapname/device_graph`
+
+.. note::
+
+    为什么全连接层 (线性层) 被划分到了主机任务?
+
+    全连接层就是矩阵乘法，理论上非常适合NVCIM计算模式，但是实际上全连接层由于展开了整个特征图，所以其权重规模非常大，与卷积层不在一个数量级，如果按照卷积层的方式映射到Tile阵列中，会占用非常多的Tile，虽然也能运行，但是违背了我们一开始设置Tile阵列是为了实现“灵活映射”的初衷。
+
+    在实际工程中，最合适的做法应当是异构计算, 即单独设置一个包含有大Xbar的芯片用于全连接层的计算，在现阶段，为了方便起见，我们暂且将全连接层划分到主机任务。

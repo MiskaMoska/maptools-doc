@@ -2,12 +2,12 @@
 =============
 .. important:: 
 
-    为了保证Maptools的正常运行，需要将Maptools的根目录（包含有`setup.py`文件的那个目录）添加到环境变量中，在Windows中，cmd和Powershell的环境变量是相互独立的，根据你是用的是cmd、Powershell还是Linux/WSL，使用不同的环境变量配置方式。
+    为了保证 |name| 的正常运行，需要将 |name| 的根目录（包含有`setup.py`文件的那个目录）添加到环境变量中，在Windows中，cmd和Powershell的环境变量是相互独立的，根据你是用的是cmd、Powershell还是Linux/WSL，使用不同的环境变量配置方式。
 
 配置cmd环境变量
 ---------------
 
-在Windows桌面右键 `此电脑`, 选择 `属性`, 打开 `高级选项` -> `环境变量`, 新建一个用户或系统变量, 变量名为: `NVCIM_HOME`, 值为Maptools的根目录.
+在Windows桌面右键 `此电脑`, 选择 `属性`, 打开 `高级选项` -> `环境变量`, 新建一个用户或系统变量, 变量名为: `NVCIM_HOME`, 值为 |name| 的根目录.
 
 重新打开一个cmd窗口，运行:
 

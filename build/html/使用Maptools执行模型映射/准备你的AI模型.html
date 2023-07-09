@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>准备你的AI模型 &mdash; Maptools 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="配置全局参数" href="%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html" />
+    <link rel="prev" title="配置环境变量" href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Maptools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Maptools 安装与配置</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D.html">安装环境介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%BA%93.html">安装依赖库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E5%AE%89%E8%A3%85Maptools.html">安装 Maptools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html">配置环境变量</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">使用 Maptools 执行模型映射</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">准备你的AI模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#onnx">获取onnx模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">通过云盘获得onnx模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">自己动手导出onnx模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#githubonnx">从github上获取onnx模型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#netron-check">查看onnx模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html">配置全局参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96.html">执行模型量化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%BD%AC%E6%8D%A2.html">执行模型转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%89%A7%E8%A1%8CTile%E6%98%A0%E5%B0%84%20%28%E9%80%BB%E8%BE%91%E6%98%A0%E5%B0%84%29.html">执行Tile映射 (逻辑映射)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%89%A7%E8%A1%8CNoC%E6%98%A0%E5%B0%84%20%28%E7%89%A9%E7%90%86%E6%98%A0%E5%B0%84%29.html">执行NoC映射 (物理映射)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">使用 Maptools 执行系统仿真</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E4%BB%BF%E7%9C%9F/%E6%98%A0%E5%B0%84%E5%89%8D%E4%BB%BF%E7%9C%9F.html">映射前仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E4%BB%BF%E7%9C%9F/CalcuSim%E4%BB%BF%E7%9C%9F.html">CalcuSim仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E4%BB%BF%E7%9C%9F/TokSim%E4%BB%BF%E7%9C%9F.html">TokSim仿真</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Maptools 源代码结构</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/quantization.html">quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/mapper.html">mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/nlrt.html">nlrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/calcusim.html">calcusim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/toksim.html">toksim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/drawing.html">drawing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Maptools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">准备你的AI模型</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/使用Maptools执行模型映射/准备你的AI模型.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ai">
+<h1>准备你的AI模型<a class="headerlink" href="#ai" title="此标题的永久链接"></a></h1>
+<p>Maptools 端到端映射的起点是onnx模型, onnx是一种神经网络通用的算子图格式, 它包含了能够支持神经网络运行的全部信息.
+几乎所有的深度学习框架都支持onnx格式, 因此,  Maptools 拥有较强的通用性.</p>
+<section id="onnx">
+<h2>获取onnx模型<a class="headerlink" href="#onnx" title="此标题的永久链接"></a></h2>
+<section id="id1">
+<h3>通过云盘获得onnx模型<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h3>
+<p>点击 <a class="reference external" href="https://www.aliyundrive.com/s/z9GwBFndDeh">这里</a> 获取现成的resent18、resnet34和resnet50的onnx模型</p>
+</section>
+<section id="id3">
+<h3>自己动手导出onnx模型<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>授人以鱼不如授人以渔，若要将自己训练好的模型导出到的onnx文件，可以使用torch的onnx工具，下面展示了一个导出torchvision官方提供的resnet18模型到onnx文件的例子。</p>
+<p>编写python脚本：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span> <span class="k">as</span> <span class="nn">tv</span>
+<span class="kn">import</span> <span class="nn">torch.onnx</span> <span class="k">as</span> <span class="nn">ox</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">()</span> <span class="c1">#可以换成你自己的模型</span>
+
+<span class="n">ox</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">224</span><span class="p">]),</span> <span class="c1">#输入数据尺寸</span>
+    <span class="s2">&quot;onnx_models/resnet18.onnx&quot;</span><span class="p">,</span> <span class="c1">#输出路径，自己定义</span>
+    <span class="n">opset_version</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+    <span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">],</span>
+    <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>接下来需要使用 <cite>onnxsim</cite> 工具进行模型简化，比如将卷积层和BN融合。</p>
+<p>运行下面的命令安装 <cite>onnxsim</cite> ：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>onnx-simplifier<span class="o">==</span><span class="m">0</span>.4.17
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>注意这里必须指定安装 <cite>onnxsim</cite> 的0.4.17版本，因为其他版本亲测有bug，而0.4.17是比较稳定的</p>
+</div>
+<p>运行下面的命令进行模型简化：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>onnxsim<span class="w"> </span>a.onnx<span class="w"> </span>b.onnx
+</pre></div>
+</div>
+<p>其中 <cite>a.onnx</cite> 是待简化的模型路径， <cite>b.onnx</cite> 是简化后的模型的保存路径</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>切记在对一个onnx模型进行映射之前，一定要先让你的onnx模型文件过一遍 <cite>onnxsim</cite> ， <cite>onnxsim</cite> 不仅能够简化模型结构，还能补全每层的尺寸信息，只有经过简化和补全的onnx模型才是 Maptools 所能识别的有效输入</p>
+</div>
+</section>
+<section id="githubonnx">
+<h3>从github上获取onnx模型<a class="headerlink" href="#githubonnx" title="此标题的永久链接"></a></h3>
+<p>onnx官方提供了一些常见神经网络的onnx模型, 发布在github上, 点击 <a class="reference external" href="https://github.com/onnx/models">这里</a> 下载, 记得下载得到的模型同样要使用 <cite>onnxsim</cite> 进行简化.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>注意从github上获取的onnx模型并不一定能用于 Maptools 映射, 即使经过了onnxsim简化, 因为这些模型的算子图结构可能会千奇百怪, 可能会超出 Maptools 能够识别的范围,
+所以建议在执行模型映设置前先使用 <cite>netron</cite> 工具检查onnx模型的结构是否合理, 请参照 <a class="reference internal" href="#netron-check"><span class="std std-ref">查看onnx模型</span></a>.</p>
+</div>
+</section>
+</section>
+<section id="netron-check">
+<span id="id5"></span><h2>查看onnx模型<a class="headerlink" href="#netron-check" title="此标题的永久链接"></a></h2>
+<p>可以使用 <cite>netron</cite> 查看onnx模型的结构和参数， <cite>netron</cite> 是一款神经网络可视化工具，点击 <a class="reference external" href="https://netron.app/">这里</a> 使用 <cite>netron</cite> 的在线版，然后选择你要查看的onnx模型即可。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../Maptools%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" class="btn btn-neutral float-left" title="配置环境变量" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html" class="btn btn-neutral float-right" title="配置全局参数" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2023, Wenxu Cao.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

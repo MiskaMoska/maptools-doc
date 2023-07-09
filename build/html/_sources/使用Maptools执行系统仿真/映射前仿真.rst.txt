@@ -1,2 +1,4 @@
 映射前仿真
 ===========
+
++ Tile映射得到的 :py:data:`CTG` 被存放在 :py:data:`TileMapper.ctg` 属性中, 供后续映射和仿真使用.
