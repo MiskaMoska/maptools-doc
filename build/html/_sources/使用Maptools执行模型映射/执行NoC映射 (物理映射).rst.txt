@@ -1,7 +1,7 @@
 执行NoC映射 (物理映射)
 ======================
 
-NoC映射的核心任务是根据片上网络的具体规格，将 :py:data:`CTG` 中的每个逻辑Tile一一绑定到物理Tile，完成逻辑-物理映射，并根据物理Tile间的通信关系规划片上网络的路由路径, 因此又称作物理映射.
+NoC映射的核心任务是根据片上网络的具体规格, 将 :py:data:`CTG` 中的每个逻辑Tile一一绑定到物理Tile, 完成逻辑-物理映射, 并根据物理Tile间的通信关系规划片上网络的路由路径, 因此又称作物理映射.
 
 NoC映射流程介绍
 ----------------
@@ -31,7 +31,7 @@ NoC映射的全部流程都被集成到 :py:data:`NocMapper` 这个 `class` 中,
     # 代码接上回
     ... 
 
-    # 创建Tile阵列拓扑图，设置阵列规模
+    # 创建Tile阵列拓扑图, 设置阵列规模
     acg = ACG(6, 8)
 
     # 创建物理映射器
@@ -53,8 +53,7 @@ NoC映射的全部流程都被集成到 :py:data:`NocMapper` 这个 `class` 中,
     + 表征NoC拓扑的 :py:data:`ACG`
     + NoC或Tile阵列的尺寸
 
-    另外, 还可以通过一些关键字参数指定布局布线引擎 (:ref:`layout_engine`, :ref:`routing_engine`).
-
+    另外, 还可以通过一些关键字参数指定 :ref:`layout_engine` 和 :ref:`routing_engine`.
     详见 :py:data:`NocMapper.__init__`.
 
 

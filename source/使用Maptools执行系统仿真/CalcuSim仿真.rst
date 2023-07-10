@@ -5,19 +5,19 @@ CalcuSim仿真
 ----------------------------------
 
 :py:data:`CalcuSim` 是一款面向NVCIM AI芯片的准确率仿真工具.
-它根据 :py:data:`CTG` 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型，能够实现对硬件中每个 Tile 计算过程的模拟以及中间
-计算结果的观测，从而实现对实际 NVCIM AI 芯片识别准确率的精确评估。另外, 用户可以调节 :py:data:`CalcuSim` 的硬件参数, 以实现不同硬件配置模式下的准确率评估.
+它根据 :py:data:`CTG` 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间
+计算结果的观测, 从而实现对实际 NVCIM AI 芯片识别准确率的精确评估. 另外, 用户可以调节 :py:data:`CalcuSim` 的硬件参数, 以实现不同硬件配置模式下的准确率评估.
 
 .. important::
 
-    |name| 针对 Tile 内部硬件的实际计算特性（如逐 bit 输入（Bit Serial）、 ADC 箝位（Clamp）等、量化转换、乘法解构等） 进行了软件模拟，
-    并为用户注入器件非理想因素（比如 IVC 系数（电流-电压转换系数）、 ADC 量化误差以及 Xbar 权重漂移等）提供了可扩展接口，从而能够实现对整个硬件计算过程的精确模拟。
+    |name| 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟, 
+    并为用户注入器件非理想因素 (比如 IVC 系数 (电流-电压转换系数),  ADC 量化误差以及 Xbar 权重漂移等) 提供了可扩展接口, 从而能够实现对整个硬件计算过程的精确模拟. 
 
 :py:data:`CalcuSim` 的组织结构
 -------------------------------
 
-:py:data:`CalcuSim` 由 :py:data:`DeviceTask` (设备任务执行器) 和 :py:data:`HostTask` (主机任务执行器) 两部分组成，
-其中 :py:data:`DeviceTask` 是主体，:py:data:`DeviceTask` 包含多个 :py:data:`TileTask`，每个 :py:data:`TileTask`内部实现了对Tile 计算过程的模拟,
+:py:data:`CalcuSim` 由 :py:data:`DeviceTask` (设备任务执行器) 和 :py:data:`HostTask` (主机任务执行器) 两部分组成, 
+其中 :py:data:`DeviceTask` 是主体, :py:data:`DeviceTask` 包含多个 :py:data:`TileTask`, 每个 :py:data:`TileTask` 内部实现了对Tile 计算过程的模拟,
 如下图所示:
 
 .. image:: ../figures/3.svg
@@ -77,16 +77,16 @@ CalcuSim仿真
 量化后仿真
 ~~~~~~~~~~~
 
-再确定量化前仿真结果无误后, 便可将关键字参数 :py:data:`quantize` 设置为 `True` 以执行量化后仿真. 但是需要注意, 为了模拟实际的Xbar的卷积运算过程, 还需要将关键字参数 :py:data:`physical` 设置为 `True`, 这一点是非常重要的.
+在确定量化前仿真结果无误后, 便可将关键字参数 :py:data:`quantize` 设置为 `True` 以执行量化后仿真. 但是需要注意, 为了模拟实际的Xbar的卷积运算过程, 还需要将关键字参数 :py:data:`physical` 设置为 `True`, 这一点是非常重要的.
 
 MAC结果范围统计
 +++++++++++++++
 
 .. note::
 
-    当 :py:data:`physical` 设置为 `False`时, :py:data:`CalcuSim` 使用Pytorch提供的 `torch.nn.functional.conv2d` 函数实现卷积计算, 但当 :py:data:`physical` 设置为 `True` 时, :py:data:`CalcuSim` 使用自定义的 `cimu_conv2d` 函数模拟Xbar的卷积运算过程, 包括ADC的箝位.
+    当 :py:data:`physical` 设置为 `False` 时, :py:data:`CalcuSim` 使用Pytorch提供的 :py:data:`torch.nn.functional.conv2d` 函数实现卷积计算, 但当 :py:data:`physical` 设置为 `True` 时, :py:data:`CalcuSim` 使用自定义的 :py:data:`cimu_conv2d` 函数模拟Xbar的卷积运算过程, 包括ADC的箝位.
     
-    这意味着在执行量化后仿真时, 不管Xbar的BL (Bitline) 上的MAC (乘累加) 结果的值是多大, 都会将其截断至ADC的量程内, 如果MAC结果比较大, 意味着绝大部分信息都会因为ADC的箝位而丢失, 因此会带来致命性的影响. 合理调整IVC系数可以减少ADC箝位带来的信息损失, IVC系数的效果相当于在将MAC结果乘以一个收缩系数后再输入至ADC, 因此能够尽可能地将MAC结果收缩到ADC的量程内.
+    ADC箝位意味着在执行量化后仿真时, 不管Xbar的BL (Bitline) 上的MAC (乘累加) 结果的值是多大, 都会将其截断至ADC的量程内, 如果MAC结果比较大, 意味着绝大部分信息都会因为ADC的箝位而丢失, 因此会带来致命性的影响. 合理调整IVC系数可以减少ADC箝位带来的信息损失, IVC系数的效果相当于在将MAC结果乘以一个收缩系数后再输入至ADC, 因此能够尽可能地将MAC结果收缩到ADC的量程内.
 
     ICV系数 (IVCF) 应当设置为多大取决于每个BL上的MAC结果的范围, 如果范围很大, 则IVCF需要设置得比较小.
 
@@ -199,7 +199,7 @@ MAC结果范围统计
 中间结果读取
 ~~~~~~~~~~~~
 
-可以使用 |name| 提供的 :py:data:`read_results` 读取保存的中间结果文件, 得到的是一个字典, 其 `key` 是 :py:data:`LogicalTile` 格式的逻辑Tile, `value` 是该Tile的中间结果字典, 用户可以自行查看该字典的结构, 如下:
+可以使用 |name| 提供的 :py:data:`read_results` 函数读取保存的中间结果文件, 得到的是一个字典, 其 `key` 是 :py:data:`LogicalTile` 格式的逻辑Tile, `value` 是该Tile的中间结果字典, 建议用户自行查看该字典的结构并获取目标中间结果, 如下:
 
 .. code-block:: python
 

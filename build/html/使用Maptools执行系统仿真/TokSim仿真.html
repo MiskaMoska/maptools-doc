@@ -132,22 +132,22 @@
 <li class="toctree-l1"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html">CalcuSim仿真</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id1">什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id2"><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的组织结构</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id5">单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id6">量化前仿真</a></li>
-<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id7">量化后仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id3">单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id4">量化前仿真</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id5">量化后仿真</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#mac">MAC结果范围统计</a></li>
 <li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#ivc">根据统计结果设置IVC系数</a></li>
-<li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id8">执行仿真</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id6">执行仿真</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id9">中间结果观测</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id10">中间结果保存</a></li>
-<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id11">中间结果读取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id7">中间结果观测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id8">中间结果保存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id9">中间结果读取</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id12">使用测试集实现准确率评估</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id10">使用测试集实现准确率评估</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TokSim仿真</a><ul>
@@ -261,9 +261,9 @@
 <h1>TokSim仿真<a class="headerlink" href="#toksim" title="此标题的永久链接"></a></h1>
 <section id="id1">
 <h2>什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 仿真?<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
-<p>类似于多数 AI 加速器，在存算一体系统中，缓存是至关重要的，因为多个卷积层之间的中间结果需要被缓存，即使采用反压式的流计算，卷积窗口的数据依赖关系以及多个分支固有的数据量不平衡会导致在某些计算节点，<strong>数据需要首先被积攒到一定量才能被释放，如果缓存容量无法满足数据积攒的缓存需求，则会导致生产-消费死锁</strong>。</p>
-<p>然而，不同于常规的生产消费者模型中 token 消费和生产的数量和比率是恒定的，<strong>在存算一体系统中，卷积计算节点每次执行消耗和生产的 token 数量是不固定的、变化的</strong>，因此无法采用传统的分析方法对存算一体系统中的各缓存容量需求进行精确评估。</p>
-<p>基于此问题，我们开发出了 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> ， 通过逐次迭代模拟实现对存算一体系统中各缓存容量的精确评估。</p>
+<p>类似于多数 AI 加速器, 在存算一体系统中, 缓存是至关重要的, 因为多个卷积层之间的中间结果需要被缓存, 即使采用反压式的流计算, 卷积窗口的数据依赖关系以及多个分支固有的数据量不平衡会导致在某些计算节点, <strong>数据需要首先被积攒到一定量才能被释放, 如果缓存容量无法满足数据积攒的缓存需求, 则会导致生产-消费死锁</strong>.</p>
+<p>然而, 不同于常规的生产消费者模型中 token 消费和生产的数量和比率是恒定的, <strong>在存算一体系统中, 卷积计算节点每次执行消耗和生产的 token 数量是不固定的, 变化的</strong>, 因此无法采用传统的分析方法对存算一体系统中的各缓存容量需求进行精确评估.</p>
+<p>基于此问题, 我们开发出了 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 仿真器,  通过逐次迭代模拟Tile之间的生产消费过程, 从而实现对存算一体系统中各缓存容量的精确评估.</p>
 </section>
 <section id="id2">
 <h2><code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 的组织结构<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
@@ -271,21 +271,21 @@
 <a class="reference internal image-reference" href="../_images/4.svg"><img alt="../_images/4.svg" class="align-center" height="363" src="../_images/4.svg" width="563" /></a>
    <br>
 
-在该模型中，每个 Tile 包含:<ul class="simple">
-<li><p>一个卷积窗口滑动器（Conv Window Slider）</p></li>
-<li><p>一个池化窗口滑动器（Pool Window Slider）</p></li>
-<li><p>一个 Resize (上采样) 窗口滑动器（Resize Window Slider）</p></li>
-<li><p>一个 Merge 接收端缓存（merge buf）</p></li>
-<li><p>一个 Gather 接收端缓存（gather buf）</p></li>
-<li><p>一个中间结果缓存（inter buf）</p></li>
+在该模型中, 每个 Tile 包含:<ul class="simple">
+<li><p>一个卷积窗口滑动器 (Conv Window Slider)</p></li>
+<li><p>一个池化窗口滑动器 (Pool Window Slider)</p></li>
+<li><p>一个 Resize (上采样) 窗口滑动器 (Resize Window Slider)</p></li>
+<li><p>一个 Merge 接收端缓存 (merge buf)</p></li>
+<li><p>一个 Gather 接收端缓存 (gather buf)</p></li>
+<li><p>一个中间结果缓存 (inter buf)</p></li>
 </ul>
-<p>其中, 卷积/池化窗口滑动器用于模拟由于窗口滑动而形成的数据依赖关系和生产-消费过程，其内部设有一个缓存，用于存储那些已经到达但由于窗口需求还不能被释放的 token。多个 Tile 之间通过 cast、merge 和 gather 三种通信元进行连接， 三种通信元分别用于实现三种数据流的通信转发和缓存。</p>
-<p>为了评估每个缓存的最小需求，每次迭代时，首层 Tile 均接收一个 token，且所有Tile 中的每个计算节点均执行至多一次计算。</p>
+<p>其中, 卷积/池化窗口滑动器用于模拟由于窗口滑动而形成的数据依赖关系和生产-消费过程, 其内部设有一个缓存, 用于存储那些已经到达但由于窗口需求还不能被释放的 token. 多个 Tile 之间通过 cast, merge 和 gather 三种通信元进行连接,  三种通信元分别用于实现三种数据流的通信转发和缓存.</p>
+<p>为了评估每个缓存的最小需求, 每次迭代时, 首层 Tile 均接收一个 token, 且所有Tile 中的每个计算节点均执行至多一次计算.</p>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
 <ul class="simple">
-<li><p>为了提升迭代速度，我们使用 C++实现 TokSim 的建模，相比Python迭代速度提升了100倍.</p></li>
-<li><p>我们通过 Python 的静态编译库Cython 实现 TokSim 与 Maptools 的对接，既保证了执行速度，又保证了用户能够方便地从 Maptools 中调用 TokSim.</p></li>
+<li><p>为了提升迭代速度, 我们使用 C++实现 TokSim 的建模, 相比Python迭代速度提升了100倍.</p></li>
+<li><p>我们通过 Python 的静态编译库Cython 实现 TokSim 与 Maptools 的对接, 既保证了执行速度, 又保证了用户能够方便地从 Maptools 中调用 TokSim.</p></li>
 </ul>
 </div>
 </section>

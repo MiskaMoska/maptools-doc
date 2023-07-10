@@ -132,22 +132,22 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CalcuSim仿真</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2"><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的组织结构</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id6">量化前仿真</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">量化后仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">量化前仿真</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">量化后仿真</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#mac">MAC结果范围统计</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ivc">根据统计结果设置IVC系数</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">执行仿真</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">执行仿真</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">中间结果观测</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id10">中间结果保存</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">中间结果读取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">中间结果观测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">中间结果保存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">中间结果读取</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id12">使用测试集实现准确率评估</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">使用测试集实现准确率评估</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html">TokSim仿真</a><ul>
@@ -262,24 +262,24 @@
 <section id="id1">
 <h2>什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真?<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
 <p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 是一款面向NVCIM AI芯片的准确率仿真工具.
-它根据 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型，能够实现对硬件中每个 Tile 计算过程的模拟以及中间
-计算结果的观测，从而实现对实际 NVCIM AI 芯片识别准确率的精确评估。另外, 用户可以调节 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的硬件参数, 以实现不同硬件配置模式下的准确率评估.</p>
+它根据 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间
+计算结果的观测, 从而实现对实际 NVCIM AI 芯片识别准确率的精确评估. 另外, 用户可以调节 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的硬件参数, 以实现不同硬件配置模式下的准确率评估.</p>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
-<p>Maptools 针对 Tile 内部硬件的实际计算特性（如逐 bit 输入（Bit Serial）、 ADC 箝位（Clamp）等、量化转换、乘法解构等） 进行了软件模拟，
-并为用户注入器件非理想因素（比如 IVC 系数（电流-电压转换系数）、 ADC 量化误差以及 Xbar 权重漂移等）提供了可扩展接口，从而能够实现对整个硬件计算过程的精确模拟。</p>
+<p>Maptools 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟,
+并为用户注入器件非理想因素 (比如 IVC 系数 (电流-电压转换系数),  ADC 量化误差以及 Xbar 权重漂移等) 提供了可扩展接口, 从而能够实现对整个硬件计算过程的精确模拟.</p>
 </div>
 </section>
 <section id="id2">
 <h2><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的组织结构<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 由 <code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> (设备任务执行器) 和 <code class="xref py py-data docutils literal notranslate"><span class="pre">HostTask</span></code> (主机任务执行器) 两部分组成，
-其中 <code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> 是主体，<code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> 包含多个 <code class="xref py py-data docutils literal notranslate"><span class="pre">TileTask</span></code>，每个 :py:data:<a href="#id3"><span class="problematic" id="id4">`</span></a>TileTask`内部实现了对Tile 计算过程的模拟,
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 由 <code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> (设备任务执行器) 和 <code class="xref py py-data docutils literal notranslate"><span class="pre">HostTask</span></code> (主机任务执行器) 两部分组成,
+其中 <code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> 是主体, <code class="xref py py-data docutils literal notranslate"><span class="pre">DeviceTask</span></code> 包含多个 <code class="xref py py-data docutils literal notranslate"><span class="pre">TileTask</span></code>, 每个 <code class="xref py py-data docutils literal notranslate"><span class="pre">TileTask</span></code> 内部实现了对Tile 计算过程的模拟,
 如下图所示:</p>
 <a class="reference internal image-reference" href="../_images/3.svg"><img alt="../_images/3.svg" class="align-center" height="331" src="../_images/3.svg" width="653" /></a>
 <br><p><code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 本质是一个 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, 支持 <cite>cuda</cite> 加速, 用户可以像调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 模型那样通过调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.forward</span></code> 方法实现 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真, 并通过调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.cuda</span></code> 方法实现 <cite>cuda</cite> 加速.</p>
 </section>
-<section id="id5">
-<h2>单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<section id="id3">
+<h2>单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
 <p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 支持量化前仿真和量化后仿真, 用户可以通过在构建 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 对象时设置对应 <a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%98%A0%E5%B0%84/%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html#quantize" title="quantize"><code class="xref py py-data docutils literal notranslate"><span class="pre">quantize</span></code></a> 参数, 以决定是否开启量化后仿真.</p>
 <div class="admonition attention">
 <p class="admonition-title">注意</p>
@@ -293,8 +293,8 @@
 <li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#ModelParams" title="ModelParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">ModelParams</span></code></a> 类型的模型参数, 在执行量化前仿真时, 该模型参数可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">OnnxConverter.params</span></code> 属性获取, 在执行量化后仿真时, 需要使用 Maptools 提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">read_quantparams</span></code> 从量化保存的 <cite>./mapsave/your-mapname/quantparams.pkl</cite> 中读取量化后的模型参数.</p></li>
 </ul>
 <p>另外, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 还接受一些一些关键字参数, 详见 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.__init__</span></code>.</p>
-<section id="id6">
-<h3>量化前仿真<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<section id="id4">
+<h3>量化前仿真<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
 <p>下面展示了一个使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 进行单张图片量化前仿真的示例:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 代码接上回</span>
 <span class="o">...</span>
@@ -313,15 +313,15 @@
 </pre></div>
 </div>
 </section>
-<section id="id7">
-<h3>量化后仿真<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
-<p>再确定量化前仿真结果无误后, 便可将关键字参数 <a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%98%A0%E5%B0%84/%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html#quantize" title="quantize"><code class="xref py py-data docutils literal notranslate"><span class="pre">quantize</span></code></a> 设置为 <cite>True</cite> 以执行量化后仿真. 但是需要注意, 为了模拟实际的Xbar的卷积运算过程, 还需要将关键字参数 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>True</cite>, 这一点是非常重要的.</p>
+<section id="id5">
+<h3>量化后仿真<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>在确定量化前仿真结果无误后, 便可将关键字参数 <a class="reference internal" href="../%E4%BD%BF%E7%94%A8Maptools%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%98%A0%E5%B0%84/%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0.html#quantize" title="quantize"><code class="xref py py-data docutils literal notranslate"><span class="pre">quantize</span></code></a> 设置为 <cite>True</cite> 以执行量化后仿真. 但是需要注意, 为了模拟实际的Xbar的卷积运算过程, 还需要将关键字参数 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>True</cite>, 这一点是非常重要的.</p>
 <section id="mac">
 <h4>MAC结果范围统计<a class="headerlink" href="#mac" title="此标题的永久链接"></a></h4>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p>当 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>False`时, :py:data:`CalcuSim</cite> 使用Pytorch提供的 <cite>torch.nn.functional.conv2d</cite> 函数实现卷积计算, 但当 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>True</cite> 时, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 使用自定义的 <cite>cimu_conv2d</cite> 函数模拟Xbar的卷积运算过程, 包括ADC的箝位.</p>
-<p>这意味着在执行量化后仿真时, 不管Xbar的BL (Bitline) 上的MAC (乘累加) 结果的值是多大, 都会将其截断至ADC的量程内, 如果MAC结果比较大, 意味着绝大部分信息都会因为ADC的箝位而丢失, 因此会带来致命性的影响. 合理调整IVC系数可以减少ADC箝位带来的信息损失, IVC系数的效果相当于在将MAC结果乘以一个收缩系数后再输入至ADC, 因此能够尽可能地将MAC结果收缩到ADC的量程内.</p>
+<p>当 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>False</cite> 时, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 使用Pytorch提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.functional.conv2d</span></code> 函数实现卷积计算, 但当 <code class="xref py py-data docutils literal notranslate"><span class="pre">physical</span></code> 设置为 <cite>True</cite> 时, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 使用自定义的 <code class="xref py py-data docutils literal notranslate"><span class="pre">cimu_conv2d</span></code> 函数模拟Xbar的卷积运算过程, 包括ADC的箝位.</p>
+<p>ADC箝位意味着在执行量化后仿真时, 不管Xbar的BL (Bitline) 上的MAC (乘累加) 结果的值是多大, 都会将其截断至ADC的量程内, 如果MAC结果比较大, 意味着绝大部分信息都会因为ADC的箝位而丢失, 因此会带来致命性的影响. 合理调整IVC系数可以减少ADC箝位带来的信息损失, IVC系数的效果相当于在将MAC结果乘以一个收缩系数后再输入至ADC, 因此能够尽可能地将MAC结果收缩到ADC的量程内.</p>
 <p>ICV系数 (IVCF) 应当设置为多大取决于每个BL上的MAC结果的范围, 如果范围很大, 则IVCF需要设置得比较小.</p>
 </div>
 <p>问题在于, 在执行量化后仿真之前, 并不知道MAC结果的范围是多少, 为此 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 提供了MAC结果范围统计的功能, 用户只需要在创建 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 对象时设置关键字参数 <code class="xref py py-data docutils literal notranslate"><span class="pre">stats</span></code> 为 <cite>True</cite>, 之后运行仿真时会自动禁用ADC箝位并进行MAC结果范围统计, 如下:</p>
@@ -365,8 +365,8 @@ bit<span class="o">(</span><span class="m">0</span><span class="w"> </span><span
 <p>目前为了便于配置, 所有Tile的所有BL都共用同一个IVCF, 之后的版本中会考虑实现逐Tile或逐BL的IVCF细粒度配置.</p>
 </div>
 </section>
-<section id="id8">
-<h4>执行仿真<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h4>
+<section id="id6">
+<h4>执行仿真<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h4>
 <p>设置好了IVCF系数, 就可以正式开始量化后仿真了, 与量化前仿真类似, 如下:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 代码接上回</span>
 <span class="o">...</span>
@@ -393,10 +393,10 @@ bit<span class="o">(</span><span class="m">0</span><span class="w"> </span><span
 </section>
 </section>
 </section>
-<section id="id9">
-<h2>中间结果观测<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
-<section id="id10">
-<h3>中间结果保存<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h3>
+<section id="id7">
+<h2>中间结果观测<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<section id="id8">
+<h3>中间结果保存<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h3>
 <p>为了观测每个Tile的中间结果, 可以在创建 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 时设置关键字参数 <code class="xref py py-data docutils literal notranslate"><span class="pre">observe</span></code> 为 <cite>True</cite>. 之后运行仿真, 并调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.save_results</span></code> 方法, 中间结果会被保存至 <cite>./mapsave/your-mapname/calcusim</cite> 目录中, 如下:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 代码接上回</span>
 <span class="o">...</span>
@@ -421,9 +421,9 @@ bit<span class="o">(</span><span class="m">0</span><span class="w"> </span><span
 </pre></div>
 </div>
 </section>
-<section id="id11">
-<h3>中间结果读取<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h3>
-<p>可以使用 Maptools 提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">read_results</span></code> 读取保存的中间结果文件, 得到的是一个字典, 其 <cite>key</cite> 是 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#LogicalTile" title="LogicalTile"><code class="xref py py-data docutils literal notranslate"><span class="pre">LogicalTile</span></code></a> 格式的逻辑Tile, <cite>value</cite> 是该Tile的中间结果字典, 用户可以自行查看该字典的结构, 如下:</p>
+<section id="id9">
+<h3>中间结果读取<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
+<p>可以使用 Maptools 提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">read_results</span></code> 函数读取保存的中间结果文件, 得到的是一个字典, 其 <cite>key</cite> 是 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#LogicalTile" title="LogicalTile"><code class="xref py py-data docutils literal notranslate"><span class="pre">LogicalTile</span></code></a> 格式的逻辑Tile, <cite>value</cite> 是该Tile的中间结果字典, 建议用户自行查看该字典的结构并获取目标中间结果, 如下:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">maptools</span> <span class="kn">import</span> <span class="n">read_results</span>
 
 <span class="c1"># 读取保存的中间结果</span>
@@ -441,8 +441,8 @@ bit<span class="o">(</span><span class="m">0</span><span class="w"> </span><span
 </div>
 </section>
 </section>
-<section id="id12">
-<h2>使用测试集实现准确率评估<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h2>
+<section id="id10">
+<h2>使用测试集实现准确率评估<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h2>
 <p>单张的图片推理只能测试NVCIM AI芯片在单一数据上的计算精确度, 而为了获得NVCIM AI芯片的识别准确率, 需要使用测试数据集进行测试统计.</p>
 <p>下面以一个示例展示了如何使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 统计 <cite>ResNet18</cite> 模型在 <cite>ImageNet</cite> 测试集上的准确率:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>

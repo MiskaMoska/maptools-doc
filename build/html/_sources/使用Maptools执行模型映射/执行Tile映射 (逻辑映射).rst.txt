@@ -1,9 +1,9 @@
 执行Tile映射 (逻辑映射)
 ========================
 
-Tile映射指根据每个Tile的规格、尤其是Xbar的规格，将设备算子图的每个算子任务切分到一个或多个Tile中，并得到每个Tile的配置信息以及所有Tile之间的通信关系，这些信息通过 :py:data:`CTG` 表示.
+Tile映射指根据每个Tile的规格, 尤其是Xbar的规格, 将设备算子图的每个算子任务切分到一个或多个Tile中, 并得到每个Tile的配置信息以及所有Tile之间的通信关系, 这些信息通过 :py:data:`CTG` 表示.
 
-经过Tile映射后，可以获得当前算法所需的Tile的数量以及每个Tile的基本配置，但是这时的Tile是逻辑Tile (:py:data:`LogicalTile`)，并没有被绑定至硬件中的物理的Tile (:py:data:`PhysicalTile`), 所以Tile映射又称作逻辑映射.
+经过Tile映射后, 可以获得当前算法所需的Tile的数量以及每个Tile的基本配置, 但是这时的Tile是逻辑Tile (:py:data:`LogicalTile`), 并没有被绑定至硬件中的物理的Tile (:py:data:`PhysicalTile`), 所以Tile映射又称作逻辑映射.
 
 通过 :py:data:`TileMapper` 实现Tile映射
 -------------------------------------------
@@ -17,7 +17,7 @@ Tile映射的全部流程都被集成到 :py:data:`TileMapper` 这个 `class` �
     # 代码接上回
     ... 
 
-    # 创建Tile映射器，设置Xbar尺寸为 64 × 320
+    # 创建Tile映射器, 设置Xbar尺寸为 64 × 320
     tm = TileMapper(oc.device_graph, 64, 64*5, **config)
 
     # 执行Tile映射
