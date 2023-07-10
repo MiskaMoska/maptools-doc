@@ -123,9 +123,40 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">使用 Maptools 执行系统仿真</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">映射前仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html">CalcuSim仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html">TokSim仿真</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">映射前仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">什么是映射前仿真?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modeltask">通过 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 实现映射前仿真</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">仿真结果验证</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html">CalcuSim仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id1">什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id2"><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的组织结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id5">单张图片的 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id6">量化前仿真</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id7">量化后仿真</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#mac">MAC结果范围统计</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#ivc">根据统计结果设置IVC系数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id8">执行仿真</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id9">中间结果观测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id10">中间结果保存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id11">中间结果读取</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CalcuSim%E4%BB%BF%E7%9C%9F.html#id12">使用测试集实现准确率评估</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html">TokSim仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html#id1">什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 仿真?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html#id2"><code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 的组织结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html#id3">使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 进行缓存容量评估</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TokSim%E4%BB%BF%E7%9C%9F.html#id4">使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">TokSim</span></code> 进行通信负载分布评估</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Maptools 源代码结构</span></p>
 <ul>
@@ -228,9 +259,95 @@
              
   <section id="id1">
 <h1>映射前仿真<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<section id="id2">
+<h2>什么是映射前仿真?<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>在模型转换结束后, 强烈建议做映射前仿真, 这是为了检验模型转换过程中onnx算子解析的正确性.</p>
+<p>onnx的算子在不同的深度学习框架中具有细微的差异, 为了确保 Maptools 执行的算子解析是正确的, 需要对模型转换得到的原始算子图 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#OriginGraph" title="OriginGraph"><code class="xref py py-data docutils literal notranslate"><span class="pre">OriginGraph</span></code></a> 进行仿真验证, 这个步骤称为映射前仿真.
+Maptools 提供了专门的验证模型 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 来实现映射前仿真.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>映射前仿真与量化无关, 它始终采用浮点数计算.</p>
+</div>
+</section>
+<section id="modeltask">
+<h2>通过 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 实现映射前仿真<a class="headerlink" href="#modeltask" title="此标题的永久链接"></a></h2>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 利用原始算子图重构模型的整个计算流程, 从而实现对原始模型的计算仿真. <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 本质是一个 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, 支持 <cite>cuda</cite> 加速, 用户可以像调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 模型那样通过调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask.forward</span></code> 方法实现映射前仿真, 并通过调用 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask.cuda</span></code> 方法实现 <cite>cuda</cite> 加速.</p>
+<p>在构建 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 时, 只需要传入两个参数:</p>
 <ul class="simple">
-<li><p>Tile映射得到的 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 被存放在 <code class="xref py py-data docutils literal notranslate"><span class="pre">TileMapper.ctg</span></code> 属性中, 供后续映射和仿真使用.</p></li>
+<li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#OriginGraph" title="OriginGraph"><code class="xref py py-data docutils literal notranslate"><span class="pre">OriginGraph</span></code></a> 类型的原始算子图, 可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">OnnxConverter.origin_graph</span></code> 属性获取.</p></li>
+<li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#ModelParams" title="ModelParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">ModelParams</span></code></a> 类型的模型参数, 可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">OnnxConverter.params</span></code> 属性获取.</p></li>
 </ul>
+<p>在获取输入图片数据时, 可以采用 Maptools 提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">get_input</span></code> 函数.</p>
+<p>下面是以测试单张图片为例, 展示了映射前仿真流程:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">maptools</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mapname&#39;</span><span class="p">:</span> <span class="s1">&#39;your-mapname&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;quantize&#39;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1"># 读取onnx模型</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">onnx</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;onnx_models/simp-resnet.onnx&quot;</span><span class="p">)</span>
+
+<span class="c1"># 创建onnx转换器, 指定模型结构为 ResNet</span>
+<span class="n">oc</span> <span class="o">=</span> <span class="n">OnnxConverter</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">NNModelArch</span><span class="o">.</span><span class="n">RESNET</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># 执行模型转换</span>
+<span class="n">oc</span><span class="o">.</span><span class="n">run_conversion</span><span class="p">()</span>
+
+<span class="c1"># 保存onnx解析得到的原始算子图</span>
+<span class="n">oc</span><span class="o">.</span><span class="n">plot_origin_graph</span><span class="p">()</span>
+
+<span class="c1"># 构建ModelTask</span>
+<span class="n">mt</span> <span class="o">=</span> <span class="n">ModelTask</span><span class="p">(</span><span class="n">oc</span><span class="o">.</span><span class="n">origin_graph</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># 获取输入图片数据, 缩放至 224 × 224</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s1">&#39;path/to/your/image.png&#39;</span><span class="p">,</span> <span class="n">resize</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+
+<span class="c1"># 运行映射前仿真, 获得ModelTask输出结果</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">mt</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="c1"># 仿真结果验证</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>仿真结果验证<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p>一般情况下, 可以将 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 的输出结果与原始模型的输出作对比:</p>
+<ul class="simple">
+<li><p>如果你的onnx模型是从某个深度学习框架中导出的, 那么可以在对应的深度学习框架中运行推理, 以获取原始模型的输出.</p></li>
+<li><p>如果你的onnx模型不知道是从哪里来的, 那么可以使用 <a class="reference external" href="https://github.com/microsoft/onnxruntime">onnxruntime</a> 直接运行onnx推理, 以获取原始模型的输出.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>如果你发现 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 的输出结果与原始模型的输出结果存在细微差异, 那么可以使用测试集对 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 和原始模型的准确率进行测试,
+在测试时只需把 <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelTask</span></code> 当成普通的 <code class="xref py py-data docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 使用即可, 如果两者得到的准确率差异完全可以接受 (比如1%以内), 那么可以认为模型转换是无误的, 然后可以放心地执行后续映射和仿真.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>下面展示了一个使用 <a class="reference external" href="https://github.com/microsoft/onnxruntime">onnxruntime</a> 运行onnx推理的示例:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">maptools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">onnxruntime</span> <span class="k">as</span> <span class="nn">rt</span>
+
+<span class="k">def</span> <span class="nf">onnx_infer</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">sess</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span><span class="s2">&quot;onnx_models/simp-resnet.onnx&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">input_name</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">out_name</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">get_outputs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="n">pred_onx</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">out_name</span><span class="p">],</span> <span class="p">{</span><span class="n">input_name</span><span class="p">:</span> <span class="nb">input</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;onnx infer results&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pred_onx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">onnx_infer</span><span class="p">(</span><span class="n">get_input</span><span class="p">(</span><span class="s1">&#39;path/to/your/image.png&#39;</span><span class="p">,</span> <span class="n">resize</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</section>
 </section>
 
 

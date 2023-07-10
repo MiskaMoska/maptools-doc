@@ -46,7 +46,7 @@ Tile映射结果说明
 
 + Tile映射得到的 :py:data:`CTG` 被存放在 :py:data:`TileMapper.ctg` 属性中, 供后续映射和仿真使用.
 
-+ 作出的 :py:data:`CTG` 图被保存 `./mapsave/your-mapname/ctg` 中.
++ 作出的 :py:data:`CTG` 图被保存至 `./mapsave/your-mapname/ctg` 目录中.
 
 + Tile映射报告被打印至终端.
 

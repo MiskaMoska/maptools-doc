@@ -31,7 +31,7 @@ NVCIM AI芯片架构
 
 .. image:: figures/2.svg
    :align: center
-   :scale: 120%
+   :scale: 60%
 
 .. raw:: html
 

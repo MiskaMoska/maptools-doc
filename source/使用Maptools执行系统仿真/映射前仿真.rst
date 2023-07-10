@@ -1,4 +1,100 @@
 映射前仿真
 ===========
 
-+ Tile映射得到的 :py:data:`CTG` 被存放在 :py:data:`TileMapper.ctg` 属性中, 供后续映射和仿真使用.
+
+什么是映射前仿真?
+--------------------
+
+在模型转换结束后, 强烈建议做映射前仿真, 这是为了检验模型转换过程中onnx算子解析的正确性.
+
+onnx的算子在不同的深度学习框架中具有细微的差异, 为了确保 |name| 执行的算子解析是正确的, 需要对模型转换得到的原始算子图 :py:data:`OriginGraph` 进行仿真验证, 这个步骤称为映射前仿真.
+|name| 提供了专门的验证模型 :py:data:`ModelTask` 来实现映射前仿真.
+
+.. note::
+
+    映射前仿真与量化无关, 它始终采用浮点数计算.
+
+
+通过 :py:data:`ModelTask` 实现映射前仿真
+-----------------------------------------
+
+:py:data:`ModelTask` 利用原始算子图重构模型的整个计算流程, 从而实现对原始模型的计算仿真. :py:data:`ModelTask` 本质是一个 :py:data:`torch.nn.Module`, 支持 `cuda` 加速, 用户可以像调用 :py:data:`torch.nn.Module` 模型那样通过调用 :py:data:`ModelTask.forward` 方法实现映射前仿真, 并通过调用 :py:data:`ModelTask.cuda` 方法实现 `cuda` 加速.
+
+在构建 :py:data:`ModelTask` 时, 只需要传入两个参数:
+
++ :py:data:`OriginGraph` 类型的原始算子图, 可以从 :py:data:`OnnxConverter.origin_graph` 属性获取.
++ :py:data:`ModelParams` 类型的模型参数, 可以从 :py:data:`OnnxConverter.params` 属性获取. 
+
+在获取输入图片数据时, 可以采用 |name| 提供的 :py:data:`get_input` 函数.
+
+下面是以测试单张图片为例, 展示了映射前仿真流程:
+
+.. code-block:: python
+
+    from maptools import *
+
+    config = {
+        'mapname': 'your-mapname',
+        'quantize': True
+    }
+
+    # 读取onnx模型
+    model = onnx.load("onnx_models/simp-resnet.onnx")
+
+    # 创建onnx转换器, 指定模型结构为 ResNet
+    oc = OnnxConverter(model, arch=NNModelArch.RESNET, **config)
+
+    # 执行模型转换
+    oc.run_conversion()
+
+    # 保存onnx解析得到的原始算子图
+    oc.plot_origin_graph()
+
+    # 构建ModelTask
+    mt = ModelTask(oc.origin_graph, oc.params)
+
+    # 获取输入图片数据, 缩放至 224 × 224
+    input = get_input('path/to/your/image.png', resize=(224, 224))
+
+    # 运行映射前仿真, 获得ModelTask输出结果
+    output = mt(input)
+
+    # 仿真结果验证
+    ...
+
+仿真结果验证
+-------------
+
+一般情况下, 可以将 :py:data:`ModelTask` 的输出结果与原始模型的输出作对比:
+
++ 如果你的onnx模型是从某个深度学习框架中导出的, 那么可以在对应的深度学习框架中运行推理, 以获取原始模型的输出.
++ 如果你的onnx模型不知道是从哪里来的, 那么可以使用 `onnxruntime <https://github.com/microsoft/onnxruntime>`_ 直接运行onnx推理, 以获取原始模型的输出.
+
+.. important::
+
+    如果你发现 :py:data:`ModelTask` 的输出结果与原始模型的输出结果存在细微差异, 那么可以使用测试集对 :py:data:`ModelTask` 和原始模型的准确率进行测试, 
+    在测试时只需把 :py:data:`ModelTask` 当成普通的 :py:data:`torch.nn.Module` 使用即可, 如果两者得到的准确率差异完全可以接受 (比如1%以内), 那么可以认为模型转换是无误的, 然后可以放心地执行后续映射和仿真.
+
+.. note::
+
+    下面展示了一个使用 `onnxruntime <https://github.com/microsoft/onnxruntime>`_ 运行onnx推理的示例:
+
+    .. code-block:: python
+
+        from maptools import *
+        import onnxruntime as rt
+
+        def onnx_infer(input: torch.Tensor):
+            input = input.numpy()
+            sess = rt.InferenceSession("onnx_models/simp-resnet.onnx", None)
+
+            input_name = sess.get_inputs()[0].name
+            out_name = sess.get_outputs()[0].name
+            
+            pred_onx = sess.run([out_name], {input_name: input}) 
+            print('-'*50)
+            print('onnx infer results')
+            print(pred_onx[0])
+
+        if __name__ == "__main__":
+            onnx_infer(get_input('path/to/your/image.png', resize=(224, 224)))
