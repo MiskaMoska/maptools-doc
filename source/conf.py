@@ -30,4 +30,19 @@ rst_epilog = '''
 
 extensions = [
     'sphinx.ext.autosectionlabel',
+    'sphinx_copybutton'
 ]
+
+html_theme_options = {
+    'analytics_id': '',
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'includehidden': True,
+    'titles_only': False
+}
+
+html_favicon = 'assets/logo.png'
