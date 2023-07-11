@@ -260,19 +260,19 @@
 <h1>Welcome to Maptools’s documentation!<a class="headerlink" href="#welcome-to-name-s-documentation" title="此标题的永久链接"></a></h1>
 <section id="name">
 <h2>什么是 Maptools?<a class="headerlink" href="#name" title="此标题的永久链接"></a></h2>
-<p>Maptools 是一套基于Python的非易失性存算一体  (Non-Volatile Compute In Memory, NVCIM) AI芯片设计辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真.</p>
+<p>Maptools (Memrister-based-AI Production Tools) 是一套基于 Python 的面向忆阻器 (Memrister) 存算一体AI芯片设计开发辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真.</p>
 <a class="reference internal image-reference" href="_images/1.svg"><img alt="_images/1.svg" class="align-center" height="559" src="_images/1.svg" width="582" /></a>
 <br><p>Maptools 分为映射工具链和仿真工具集两部分, 如上图所示, 映射工具链链用于实现 AI 模型的端到端映射, 仿真工具集接收来自映射工具链产生的硬件配置信息,  实现对所述模型在存算一体架构中执行过程的仿真,  从而实现对系统指标的评估. 其中:</p>
 <ul class="simple">
 <li><p>映射工具链由量化器 (Quantizer),  onnx 转换器 (OnnxConverter),  Tile映射器 (TileMapper) 和NoC映射器 (NocMapper) 组成;</p></li>
-<li><p>仿真工具集由准确率评估器 (CalcuSim) 和缓冲容量评估器 (TokSim) 组成.</p></li>
+<li><p>仿真工具集由准确率仿真器 (CalcuSim) 和缓冲容量评估器 (TokSim) 组成.</p></li>
 </ul>
 </section>
-<section id="nvcim-ai">
-<h2>NVCIM AI芯片架构<a class="headerlink" href="#nvcim-ai" title="此标题的永久链接"></a></h2>
+<section id="ai">
+<h2>存算一体AI芯片架构<a class="headerlink" href="#ai" title="此标题的永久链接"></a></h2>
 <a class="reference internal image-reference" href="_images/2.svg"><img alt="_images/2.svg" class="align-center" height="399" src="_images/2.svg" width="622" /></a>
-<br><p>NVCIM AI芯片内部是一个以存算一体阵列, 存算一体阵列由多个 Tile 排列构成, 多个 Tile 之间通过 Mesh 拓扑的片上网络 (Network on Chip,  NoC) 实现互连和通信.</p>
-<p>其中, 每个 Tile 包含一个 Xbar (Crossbar, 专指非易失性存储器计算阵列) 和一套对应的 ADC,  此外, 每个 Tile 内还设有必要的数字模块以实现对存算一体计算模式的补充, 每个 Tile 能够执行一个连续的“卷积→Bias→Add→激活→池化或上采样”操作. 在进行模型映射时, 将目标神经网络根据 Tile 的计算模式切分成多个 Tile 任务并部署至每个 Tile, 多个 Tile 间实现并行运算, 并通过片上网络实现彼此之间的通信.</p>
+<br><p>存算一体AI芯片内部是一个以存算一体阵列, 存算一体阵列由多个 Tile 排列构成, 多个 Tile 之间通过 Mesh 拓扑的片上网络 (Network on Chip,  NoC) 实现互连和通信.</p>
+<p>其中, 每个 Tile 包含一个 Xbar (Crossbar, 专指忆阻器计算阵列) 和一套对应的 ADC,  此外, 每个 Tile 内还设有必要的数字模块以实现对存算一体计算模式的补充, 每个 Tile 能够执行一个连续的“卷积→Bias→Add→激活→池化或上采样”操作. 在进行模型映射时, 将目标神经网络根据 Tile 的计算模式切分成多个 Tile 任务并部署至每个 Tile, 多个 Tile 间实现并行运算, 并通过片上网络实现彼此之间的通信.</p>
 <p>片上网络是一个由路由器 (Router), 链路 (Link) 和网络接口 (Network Interface,  NI) 组成的硬件结构, 其中:</p>
 <ul class="simple">
 <li><p>链路是数据传输的物理载体;</p></li>
@@ -286,7 +286,7 @@
 </div>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
-<p>在NVCIM AI芯片工作的过程中, 所有 Tile 能够并行工作, 形成一个 Tile 间流水线; 而在每个 Tile 内部, 数据在 Tile 配置指令的指导下以向量的形式实现计算,  因此每个 Tile 可以看做一个 SIMD 单元. 我们将这种存算一体计算范式称为 “存算一体 SIMD 流计算”.</p>
+<p>在存算一体AI芯片工作的过程中, 所有 Tile 能够并行工作, 形成一个 Tile 间流水线; 而在每个 Tile 内部, 数据在 Tile 配置指令的指导下以向量的形式实现计算,  因此每个 Tile 可以看做一个 SIMD 单元. 我们将这种存算一体计算范式称为 “存算一体 SIMD 流计算”.</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>

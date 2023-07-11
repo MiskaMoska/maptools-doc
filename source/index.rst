@@ -4,12 +4,12 @@
    contain the root `toctree` directive.
 
 Welcome to |name|'s documentation!
-====================================
+======================================
 
 什么是 |name|?
 ------------------
 
-|name| 是一套基于Python的非易失性存算一体  (Non-Volatile Compute In Memory, NVCIM) AI芯片设计辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
+|name| (Memrister-based-AI Production Tools) 是一套基于 Python 的面向忆阻器 (Memrister) 存算一体AI芯片设计开发辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
 
 
 .. image:: figures/1.svg
@@ -24,9 +24,9 @@ Welcome to |name|'s documentation!
 
 + 映射工具链由量化器 (Quantizer),  onnx 转换器 (OnnxConverter),  Tile映射器 (TileMapper) 和NoC映射器 (NocMapper) 组成; 
 
-+ 仿真工具集由准确率评估器 (CalcuSim) 和缓冲容量评估器 (TokSim) 组成. 
++ 仿真工具集由准确率仿真器 (CalcuSim) 和缓冲容量评估器 (TokSim) 组成. 
 
-NVCIM AI芯片架构
+存算一体AI芯片架构
 --------------------
 
 .. image:: figures/2.svg
@@ -37,9 +37,9 @@ NVCIM AI芯片架构
 
     <br>
 
-NVCIM AI芯片内部是一个以存算一体阵列, 存算一体阵列由多个 Tile 排列构成, 多个 Tile 之间通过 Mesh 拓扑的片上网络 (Network on Chip,  NoC) 实现互连和通信.  
+存算一体AI芯片内部是一个以存算一体阵列, 存算一体阵列由多个 Tile 排列构成, 多个 Tile 之间通过 Mesh 拓扑的片上网络 (Network on Chip,  NoC) 实现互连和通信.  
 
-其中, 每个 Tile 包含一个 Xbar (Crossbar, 专指非易失性存储器计算阵列) 和一套对应的 ADC,  此外, 每个 Tile 内还设有必要的数字模块以实现对存算一体计算模式的补充, 每个 Tile 能够执行一个连续的“卷积→Bias→Add→激活→池化或上采样”操作. 在进行模型映射时, 将目标神经网络根据 Tile 的计算模式切分成多个 Tile 任务并部署至每个 Tile, 多个 Tile 间实现并行运算, 并通过片上网络实现彼此之间的通信.  
+其中, 每个 Tile 包含一个 Xbar (Crossbar, 专指忆阻器计算阵列) 和一套对应的 ADC,  此外, 每个 Tile 内还设有必要的数字模块以实现对存算一体计算模式的补充, 每个 Tile 能够执行一个连续的“卷积→Bias→Add→激活→池化或上采样”操作. 在进行模型映射时, 将目标神经网络根据 Tile 的计算模式切分成多个 Tile 任务并部署至每个 Tile, 多个 Tile 间实现并行运算, 并通过片上网络实现彼此之间的通信.  
 
 片上网络是一个由路由器 (Router), 链路 (Link) 和网络接口 (Network Interface,  NI) 组成的硬件结构, 其中:
 
@@ -55,7 +55,7 @@ NVCIM AI芯片内部是一个以存算一体阵列, 存算一体阵列由多个 
 
 .. important::
 
-   在NVCIM AI芯片工作的过程中, 所有 Tile 能够并行工作, 形成一个 Tile 间流水线; 而在每个 Tile 内部, 数据在 Tile 配置指令的指导下以向量的形式实现计算,  因此每个 Tile 可以看做一个 SIMD 单元. 我们将这种存算一体计算范式称为 “存算一体 SIMD 流计算”. 
+   在存算一体AI芯片工作的过程中, 所有 Tile 能够并行工作, 形成一个 Tile 间流水线; 而在每个 Tile 内部, 数据在 Tile 配置指令的指导下以向量的形式实现计算,  因此每个 Tile 可以看做一个 SIMD 单元. 我们将这种存算一体计算范式称为 “存算一体 SIMD 流计算”. 
 
 .. toctree::
    :hidden:

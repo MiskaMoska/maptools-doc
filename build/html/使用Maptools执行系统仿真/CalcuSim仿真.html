@@ -261,9 +261,8 @@
 <h1>CalcuSim仿真<a class="headerlink" href="#calcusim" title="此标题的永久链接"></a></h1>
 <section id="id1">
 <h2>什么是 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 仿真?<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 是一款面向NVCIM AI芯片的准确率仿真工具.
-它根据 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间
-计算结果的观测, 从而实现对实际 NVCIM AI 芯片识别准确率的精确评估. 另外, 用户可以调节 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的硬件参数, 以实现不同硬件配置模式下的准确率评估.</p>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 是一款面向存算一体AI芯片的准确率仿真工具.
+它根据 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间计算结果的观测, 从而实现对实际存算一体AI芯片识别准确率的精确评估. 另外, 用户可以调节 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的硬件参数, 以实现不同硬件配置模式下的准确率评估.</p>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
 <p>Maptools 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟,
@@ -286,13 +285,13 @@
 <p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 是用来模拟硬件计算的, 那 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的量化前仿真有何意义?</p>
 <p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的量化前仿真可以用于验证Tile映射的正确性, 因为当Tile映射出现错误时, 所构建出的 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 是不正确的, 因此 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的仿真结果自然也是错误的.</p>
 </div>
-<p>在构建 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 时, 需要传入两个位置参数:</p>
+<p>在构建 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 时, 需要传入三个位置参数:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a>, 可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">TileMapper.ctg</span></code> 属性获取.</p></li>
 <li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#HostGraph" title="HostGraph"><code class="xref py py-data docutils literal notranslate"><span class="pre">HostGraph</span></code></a> 类型的主机算子图, 可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">OnnxConverter.host_graph</span></code> 属性获取.</p></li>
 <li><p><a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#ModelParams" title="ModelParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">ModelParams</span></code></a> 类型的模型参数, 在执行量化前仿真时, 该模型参数可以从 <code class="xref py py-data docutils literal notranslate"><span class="pre">OnnxConverter.params</span></code> 属性获取, 在执行量化后仿真时, 需要使用 Maptools 提供的 <code class="xref py py-data docutils literal notranslate"><span class="pre">read_quantparams</span></code> 从量化保存的 <cite>./mapsave/your-mapname/quantparams.pkl</cite> 中读取量化后的模型参数.</p></li>
 </ul>
-<p>另外, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 还接受一些一些关键字参数, 详见 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.__init__</span></code>.</p>
+<p>另外, <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 还接受一些关键字参数, 详见 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim.__init__</span></code>.</p>
 <section id="id4">
 <h3>量化前仿真<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
 <p>下面展示了一个使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 进行单张图片量化前仿真的示例:</p>
@@ -443,7 +442,7 @@ bit<span class="o">(</span><span class="m">0</span><span class="w"> </span><span
 </section>
 <section id="id10">
 <h2>使用测试集实现准确率评估<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h2>
-<p>单张的图片推理只能测试NVCIM AI芯片在单一数据上的计算精确度, 而为了获得NVCIM AI芯片的识别准确率, 需要使用测试数据集进行测试统计.</p>
+<p>单张的图片推理只能测试存算一体AI芯片在单一数据上的计算精确度, 而为了获得存算一体AI芯片的识别准确率, 需要使用测试数据集进行测试统计.</p>
 <p>下面以一个示例展示了如何使用 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 统计 <cite>ResNet18</cite> 模型在 <cite>ImageNet</cite> 测试集上的准确率:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">onnx</span>

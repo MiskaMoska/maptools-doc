@@ -4,9 +4,8 @@ CalcuSim仿真
 什么是 :py:data:`CalcuSim` 仿真?
 ----------------------------------
 
-:py:data:`CalcuSim` 是一款面向NVCIM AI芯片的准确率仿真工具.
-它根据 :py:data:`CTG` 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间
-计算结果的观测, 从而实现对实际 NVCIM AI 芯片识别准确率的精确评估. 另外, 用户可以调节 :py:data:`CalcuSim` 的硬件参数, 以实现不同硬件配置模式下的准确率评估.
+:py:data:`CalcuSim` 是一款面向存算一体AI芯片的准确率仿真工具.
+它根据 :py:data:`CTG` 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间计算结果的观测, 从而实现对实际存算一体AI芯片识别准确率的精确评估. 另外, 用户可以调节 :py:data:`CalcuSim` 的硬件参数, 以实现不同硬件配置模式下的准确率评估.
 
 .. important::
 
@@ -43,13 +42,13 @@ CalcuSim仿真
     :py:data:`CalcuSim` 的量化前仿真可以用于验证Tile映射的正确性, 因为当Tile映射出现错误时, 所构建出的 :py:data:`CTG` 是不正确的, 因此 :py:data:`CalcuSim` 的仿真结果自然也是错误的.
 
 
-在构建 :py:data:`CalcuSim` 时, 需要传入两个位置参数:
+在构建 :py:data:`CalcuSim` 时, 需要传入三个位置参数:
 
 + :py:data:`CTG`, 可以从 :py:data:`TileMapper.ctg` 属性获取.
 + :py:data:`HostGraph` 类型的主机算子图, 可以从 :py:data:`OnnxConverter.host_graph` 属性获取.
 + :py:data:`ModelParams` 类型的模型参数, 在执行量化前仿真时, 该模型参数可以从 :py:data:`OnnxConverter.params` 属性获取, 在执行量化后仿真时, 需要使用 |name| 提供的 :py:data:`read_quantparams` 从量化保存的 `./mapsave/your-mapname/quantparams.pkl` 中读取量化后的模型参数. 
 
-另外, :py:data:`CalcuSim` 还接受一些一些关键字参数, 详见 :py:data:`CalcuSim.__init__`.
+另外, :py:data:`CalcuSim` 还接受一些关键字参数, 详见 :py:data:`CalcuSim.__init__`.
 
 量化前仿真
 ~~~~~~~~~~~
@@ -221,7 +220,7 @@ MAC结果范围统计
 使用测试集实现准确率评估
 -------------------------
 
-单张的图片推理只能测试NVCIM AI芯片在单一数据上的计算精确度, 而为了获得NVCIM AI芯片的识别准确率, 需要使用测试数据集进行测试统计.
+单张的图片推理只能测试存算一体AI芯片在单一数据上的计算精确度, 而为了获得存算一体AI芯片的识别准确率, 需要使用测试数据集进行测试统计.
 
 下面以一个示例展示了如何使用 :py:data:`CalcuSim` 统计 `ResNet18` 模型在 `ImageNet` 测试集上的准确率:
 

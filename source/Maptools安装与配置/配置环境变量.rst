@@ -32,7 +32,7 @@
 
 .. code-block:: shell
 
-    $Env:NVCIM_HOME='c:/git/nvcim-comm' #这里的路径换成你自己的
+    $Env:NVCIM_HOME='c:/git/maptools' #这里的路径换成你自己的
 
 重新打开一个Powershell窗口, 运行:
 
@@ -53,7 +53,7 @@
 
 .. code-block:: shell
 
-    export NVCIM_HOME=/mnt/c/git/nvcim-comm #这里的路径换成你自己的
+    export NVCIM_HOME=/mnt/c/git/maptools #这里的路径换成你自己的
 
 之后不要忘了source:
 
