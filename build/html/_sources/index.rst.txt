@@ -9,7 +9,7 @@ Welcome to |name|'s documentation!
 什么是 |name|?
 ------------------
 
-|name| (Memrister-based-AI Production Tools) 是一套基于 Python 的面向忆阻器 (Memrister) 存算一体AI芯片设计开发辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
+|name| (Memristor-based-AI Production Tools) 是一套基于 Python 的面向忆阻器 (Memristor) 存算一体AI芯片设计开发辅助工具包, 能够实现从算法到硬件层面的端到端映射以及系统预仿真. 
 
 
 .. image:: figures/1.svg
