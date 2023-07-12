@@ -8,7 +8,7 @@
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -265,7 +265,7 @@
 它根据 <a class="reference internal" href="../Maptools%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/core.html#CTG" title="CTG"><code class="xref py py-data docutils literal notranslate"><span class="pre">CTG</span></code></a> 中每个 Tile 的配置信息构建出存算一体中的硬件计算模型, 能够实现对硬件中每个 Tile 计算过程的模拟以及中间计算结果的观测, 从而实现对实际存算一体AI芯片识别准确率的精确评估. 另外, 用户可以调节 <code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 的硬件参数, 以实现不同硬件配置模式下的准确率评估.</p>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
-<p>Maptools 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟,
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">CalcuSim</span></code> 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟,
 并为用户注入器件非理想因素 (比如 IVC 系数 (电流-电压转换系数),  ADC 量化误差以及 Xbar 权重漂移等) 提供了可扩展接口, 从而能够实现对整个硬件计算过程的精确模拟.</p>
 </div>
 </section>

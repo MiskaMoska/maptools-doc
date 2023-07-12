@@ -9,7 +9,7 @@ CalcuSim仿真
 
 .. important::
 
-    |name| 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟, 
+    :py:data:`CalcuSim` 针对 Tile 内部硬件的实际计算特性 (如逐 bit 输入 (Bit Serial),  ADC 箝位 (Clamp) 等, 量化转换, 乘法解构等)  进行了软件模拟, 
     并为用户注入器件非理想因素 (比如 IVC 系数 (电流-电压转换系数),  ADC 量化误差以及 Xbar 权重漂移等) 提供了可扩展接口, 从而能够实现对整个硬件计算过程的精确模拟. 
 
 :py:data:`CalcuSim` 的组织结构

@@ -46,4 +46,4 @@ html_theme_options = {
     'titles_only': False
 }
 
-html_favicon = 'assets/logo.png'
+html_favicon = 'assets/logo.svg'

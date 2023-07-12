@@ -10,7 +10,7 @@
 通过云盘获得onnx模型
 ~~~~~~~~~~~~~~~~~~~~
 
-点击 `这里 <https://www.aliyundrive.com/s/z9GwBFndDeh>`_ 获取现成的resent18, resnet34和resnet50的onnx模型
+点击 `这里 <https://pan.baidu.com/s/1IeAx3D7Die9q7LmOjIEC-A?pwd=ktv2>`_ 获取现成的onnx模型.
 
 
 自己动手导出onnx模型
