@@ -25,13 +25,14 @@
     import torch
     import torchvision as tv
     import torch.onnx as ox
-
-    model = tv.models.resnet18() #可以换成你自己的模型
+    
+    # 可以换成你自己的模型, 但注意使用torchvision提供的模型时pretrained参数一定要给True，表示使用预训练好的模型
+    model = tv.models.resnet18(pretrained=True)
 
     ox.export(
         model,
-        torch.randn([1,3,1000,224]), #输入数据尺寸
-        "onnx_models/resnet18.onnx", #输出路径, 自己定义
+        torch.randn([1,3,224,224]), # 输入数据尺寸，自己定义，但是要和之后的步骤对应起来
+        "onnx_models/resnet18.onnx", # 输出路径, 自己定义
         opset_version=11,
         input_names=["input"],
         output_names=["output"]

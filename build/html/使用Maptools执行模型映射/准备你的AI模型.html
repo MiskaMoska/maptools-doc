@@ -275,12 +275,13 @@
 <span class="kn">import</span> <span class="nn">torchvision</span> <span class="k">as</span> <span class="nn">tv</span>
 <span class="kn">import</span> <span class="nn">torch.onnx</span> <span class="k">as</span> <span class="nn">ox</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">()</span> <span class="c1">#可以换成你自己的模型</span>
+<span class="c1"># 可以换成你自己的模型, 但注意使用torchvision提供的模型时pretrained参数一定要给True，表示使用预训练好的模型</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">ox</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">224</span><span class="p">]),</span> <span class="c1">#输入数据尺寸</span>
-    <span class="s2">&quot;onnx_models/resnet18.onnx&quot;</span><span class="p">,</span> <span class="c1">#输出路径, 自己定义</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">]),</span> <span class="c1"># 输入数据尺寸，自己定义，但是要和之后的步骤对应起来</span>
+    <span class="s2">&quot;onnx_models/resnet18.onnx&quot;</span><span class="p">,</span> <span class="c1"># 输出路径, 自己定义</span>
     <span class="n">opset_version</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
     <span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">],</span>
     <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
