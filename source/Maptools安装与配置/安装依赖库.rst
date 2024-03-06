@@ -30,6 +30,7 @@ Maptool的依赖库包括:
     pip install networkx
     pip install ppq
     pip install matplotlib
+    pip install cython
 
 .. note::
 
