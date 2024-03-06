@@ -24,7 +24,7 @@ Tile映射的全部流程都被集成到 :py:data:`TileMapper` 这个 `class` �
     tm.run_map()
 
     # 打印Tile映射信息
-    tm.print_config()
+    tm.report_config()
 
     # 获得映射得到的CTG
     ctg = tm.ctg
